@@ -2,7 +2,8 @@
 
 Status: sketch only, not filed. Test after the Nov 15, 2026 Sunday scan.
 Sketch source: `~/workspace/your_files/wtw-evergreen-assignees-sketch-2026-11-10.md` (local, Nov 10)
-Card: WTW-576 — "Test evergreen assignees sketch after Nov 15 Sunday scan — Seat-Model, Dave driving implied" (assignee 👤 Dave — Dave driving, Matty assists on request)
+Card: WTW-577 — "Test evergreen assignees sketch after Nov 15 Sunday scan — Seat-Model, Dave driving implied" (assignee 👤 Dave — Dave driving, Matty assists on request)
+Renumber note (Nov 10, 21:28 ET): filed as WTW-576, but Buffy had already taken 576 on the Mini server (Starwhisker record: 4 Shot moved to Tiff, Extra bomb moved to Avery, #15, 02:26:06Z). The Mini's dedupe guard renumbered this card to WTW-577 on sync (highwater 577, reason dedupe-renumber). GitHub-side 576 file/index/highwater are stale until Dave hits Git Sync on the Mini — do not re-file, the Mini already holds the resolved state.
 
 ## Convention, in one line
 
