@@ -15,6 +15,43 @@ Build a card with exactly these fields:
 - `acceptance`: plain-language "done looks like", separate from the mechanical dodCheck.
 - `grade`: `ordinary` (one clear deliverable, low blast radius) or `careful` (design work, ambiguous scope, or changes touching the whole fleet).
 - `project`: this folder's project name (ask Dave if unsure).
+- `assignee`: the seat the card routes to (see below). Defaults to `⚪ Unassigned`.
+
+## Assignee: who the card routes to
+
+`assignee` is the seat the card is routed TO — the seat meant to execute it. It is
+not credit for who captured, filed, or approved the card. One card, one seat.
+
+Canonical values (the board picker offers exactly these; use the string verbatim):
+
+| value | seat |
+| --- | --- |
+| `⚪ Unassigned` | nobody routed yet (default) |
+| `👤 Dave` | product direction, architecture, final sign-off |
+| `👧 Quinn` | UX critique & playtesting |
+| `👩 Mandy` | human playtesting (word/puzzle games) |
+| `📋 Will` | workboard intake, triage, decomposition |
+| `🤖 Otto` | implementation, code, builds |
+| `🎨 Palette` | UI/UX design, imagery & media |
+| `🧪 Tess` | QA, probes, reliability |
+| `📚 Ed` | docs, specs, archival knowledge |
+| `✍️ Quill` | writing, narratives, build logs |
+| `💰 Fred` | token/budget treasury |
+| `💬 Matty` | conversational & life layer |
+| `🔍 Scout` | deep research, landscape scans |
+
+Older cards carry decorated or compound strings (`🤖 Otto (Coder)`, `📋 Will + 🤖 Otto`).
+Do not copy those: the picker cannot represent them. If two seats genuinely share
+the work, assign the one that executes and name the other in `desc`.
+
+When to set it:
+
+- Set the executing seat when the brief makes the owner obvious (a code fix → `🤖 Otto`,
+  a podcast script → `✍️ Quill`, a reference doc → `📚 Ed`).
+- Leave `⚪ Unassigned` for raw capture and cards whose scope is not yet known. Do not
+  interrogate Dave about routing for an unscoped capture.
+- Ask Dave only when the card will execute immediately (`ready`, dispatch) and two
+  seats are equally plausible. Ask once, naming the candidates.
 
 ## Shaping rules
 
@@ -48,6 +85,43 @@ splits), and completion.
   numbers). Record cards for finished work are legitimate — mark them
   clearly as records so they can be moved straight to Done.
 
+## Record cards: filing work that is already done
+
+A record card is the paper trail for work that finished before anyone filed it. File
+it once, straight into `done`, marked clearly as a record. Do not leave it in Inbox
+for a human to move, and do not file a second card for work that already has one —
+edit the existing card's fields and column instead.
+
+Board columns are `inbox`, `ready`, `progress`, `done`. File records with
+`POST /api/cards` (below), not `POST /cards`: the filing route always creates in
+`inbox` and ignores `column` and `completedAt`. The record sets `"column": "done"`,
+`completedAt` (ISO-8601 UTC, now), and `"tag": "Shipped"`, and the endpoint stamps
+`id`, `ticketId`, `rev`, and `createdAt` for you.
+
+```json
+{
+  "title": "Record: <what shipped, past tense>",
+  "desc": "Record of <what happened>, filed after the fact on <YYYY-MM-DD>.\n\n- <fact the reader cannot infer>\n- <receipt: commit SHA, issue #, URL, amount>\n- <what carries forward, if anything>\n\nDoD: <mechanical proof the end state exists>.",
+  "column": "done",
+  "tag": "Shipped",
+  "project": "<project>",
+  "priority": "P2",
+  "assignee": "<the seat or person that did the work>",
+  "dodCheck": "<same check as the DoD line>",
+  "acceptance": "<plain-language done>",
+  "grade": "ordinary",
+  "completedAt": "<ISO-8601 UTC>"
+}
+```
+
+Send it wrapped as the `card` value: `{"card": { ...record }}`.
+
+State what shipped and the receipt, not the build log. Keep the date the work
+happened in `desc` if it differs from the filing date. Records still need a
+`dodCheck` — point it at the end state (an account exists, a domain resolves), not
+at a process step. If a human did the work themselves (a purchase, an account
+created), `assignee` is that person, e.g. `👤 Dave`.
+
 ## Filing
 
 File it with: `curl -X POST http://100.101.43.126:3333/cards -H 'Content-Type: application/json' -d '<json>'`
@@ -56,3 +130,24 @@ The response is `{"card": "WTW-<n>"}` — report the card number back to Dave an
 Rules:
 - No absolute paths, no cross-repo references, no human-gate language ("Dave approves", "Dave reviews").
 - Never pick a card number — the endpoint assigns it.
+
+## Reading and editing (API surface)
+
+Base URL: `http://100.101.43.126:3333`.
+
+- `GET /api/cards` → `{"status": "ok", "cards": [...]}` (the whole board, 500+ cards).
+  Find one: `curl -s http://100.101.43.126:3333/api/cards | jq '.cards[] | select(.ticketId == "WTW-123")'`.
+- `POST /cards` is the filing route (see Filing). It always creates in `inbox`, assigns
+  the next `WTW-n`, ignores `column`, `completedAt`, and `rev`, and returns
+  `{"card": "WTW-<n>", "number": <n>}`.
+- `POST /api/cards` creates or updates one card. Body: `{"card": {...}, "expectedRev": <rev>}`.
+  This is a full-card save, not a patch: fetch the card, change fields on that
+  object, send the whole thing back. On update, pass the `rev` you read as
+  `expectedRev`; the server increments it, and a stale rev merges instead of
+  overwriting — never set `rev` by hand. On create, omit `expectedRev`; the server
+  assigns `id`, `ticketId`, `rev`, and `createdAt`, and keeps the `column` and
+  `completedAt` you send (this is how a record lands straight in `done`). Returns
+  `{"status": "ok", "card": {...}}` — read `card.ticketId` for the number.
+- `POST /api/cards/<ticketId>/archive` archives a card; it leaves the board and its
+  number is not reused.
+- `GET /api/team-roster` returns the seats behind the canonical assignee values.
