@@ -25,10 +25,17 @@ Card: WTW-576 — "Test evergreen assignees sketch after Nov 15 Sunday scan — 
 
 ## Next steps — the test (after Nov 15 scan)
 
-1. Nov 15 scan lands (permanent Doc "AI stats - 110826", ~09:14 nudge). File it in the frozen shape: one file per surface, sections Source / Verbatim / Diff, same headings/order every week, `not captured` never blank.
-2. Derive a draft `assignees.md` from that scan, Seat - Model, Dave driving implied. Two tables, split: Assignees (routes to) and Done-by (records who did it).
-3. Propose changes only — one line per seat, source week + evidence — Dave rules in session. No silent adds.
-4. No filing to `dic101/wtw-prompt` until Dave says go. This test is local draft only.
+How Dave sees next Sunday (Nov 10):
+
+1. Matty reminds Dave to do the stats (Sunday 09:14 nudge). Dave will forget.
+2. Eventually Dave dumps the info to the agreed Google Drive.
+3. Dave asks Matty to analyze it; Matty analyzes, Dave reviews what Matty comes up with.
+4. They come to an agreement.
+5. Then Dave asks Matty to make the `assignees.md` file and push to `wtw-prompt`.
+
+So the loop is remind → dump → analyze → review/agree → file, with Dave driving each step and Matty assisting. The frozen capture shape below is a guide for the analysis, not a gate on Dave's dump — the dump is what it is, Matty analyzes it.
+
+For the test itself: derive a draft `assignees.md` from that scan, Seat - Model, Dave driving implied. Two tables, split: Assignees (routes to) and Done-by (records who did it). Propose changes only — one line per seat, source week + evidence — Dave rules in session. No silent adds. No filing to `dic101/wtw-prompt` until Dave says go.
 
 ## Open questions for Dave
 
