@@ -1,0 +1,48 @@
+# Next steps — Evergreen assignees (Nov 10, 2026)
+
+Status: sketch only, not filed. Test after the Nov 15, 2026 Sunday scan.
+Sketch source: `~/workspace/your_files/wtw-evergreen-assignees-sketch-2026-11-10.md` (local, Nov 10)
+Card: WTW-576 — "Test evergreen assignees sketch after Nov 15 Sunday scan — Seat-Model, Dave driving implied" (assignee 👤 Dave — Dave driving, Matty assists on request)
+
+## Convention, in one line
+
+**A seat is a WHO. A model is a brain inside a seat. A harness is how it runs.**
+
+- Assignee = seat (WHO). Who the card routes *to*. One string, verbatim. Never a model, never a node, never a price.
+- Done-by = Seat - Model. Who actually did the work, recorded at completion.
+- A model is never an assignee.
+
+## Dave's rulings (Nov 10, 2026)
+
+- Evergreen list lives in `dic101/wtw-prompt/`, updated on Sundays with the Sunday AM model scan. Filers fetch it with `wtw.md` — no workboard repo, no Mini.
+- Grow-only: never delete a seat, mark retired/future instead.
+- Ask in session if you don't know your seat; if Dave defers, file `⚪ Unassigned`. Never guess nearest, never file `??`.
+- 'Otto' is no more. The real identity is Seat (Provider/Harness) - Model.
+- **For now, Seat - Model. It implies Dave is driving.** When we get to 'AI driving AI', expand the definition — then the driver is an AI orchestrator, not implied Dave.
+- Seat for routing (coarse, stable); model only in Done-by / cost where it actually changes a decision. Don't track every Seat-Model combo — that's too granular.
+- Opus-driving-scores-of-Sonnets: probably doesn't matter at Dave's scale. Brief quality dominates, free/cheap workers work, Dave is the checker. Sonnet for frozen-spec builds, Opus held for judgment one-offs. Opus is going away in AGY anyway.
+- Variance is the problem: 63 distinct assignee values across 526 cards, 11 Otto variants, Dave in 3 spellings, same model under different names/prices across pickers. Capture was inconsistent, Matty massaged it, outputs weren't the same week after week.
+
+## Next steps — the test (after Nov 15 scan)
+
+1. Nov 15 scan lands (permanent Doc "AI stats - 110826", ~09:14 nudge). File it in the frozen shape: one file per surface, sections Source / Verbatim / Diff, same headings/order every week, `not captured` never blank.
+2. Derive a draft `assignees.md` from that scan, Seat - Model, Dave driving implied. Two tables, split: Assignees (routes to) and Done-by (records who did it).
+3. Propose changes only — one line per seat, source week + evidence — Dave rules in session. No silent adds.
+4. No filing to `dic101/wtw-prompt` until Dave says go. This test is local draft only.
+
+## Open questions for Dave
+
+1. Buffy string/avatar: `🤖 Buffy` — keep, or different avatar?
+2. Voice string: `🎙️ Voice` vs `🎙️ Voice (Voiceover Synthesizer)`?
+3. DeepAI as a seat: add `🤖 DeepAI`, or models-only?
+4. OpenCode as a seat: add, or Done-by only (`OCZ-*`)?
+5. Fred: keep + mark `retired`, or drop from the table (keep in Changelog)?
+6. Capture template: per-surface table — easy enough for Sunday morning, or too much structure?
+7. File name: `assignees.md` vs `roster.md`? (`roster.md` collides in the head with `team-roster.json`.)
+8. Handoff file: Dave ruled Nov 10 — `NEXTSTEPS.md` (not `HANDOFF.md`).
+
+## What this does NOT do
+
+- Doesn't file `assignees.md` to `dic101/wtw-prompt` — Dave's go needed, and the `?` rows above need his rulings first.
+- Doesn't touch `config/team-roster.json` or board dropdowns — those mirror this file later, if Dave wants that.
+- Doesn't change the Sunday scan itself — same surfaces, same nudge, just a frozen capture table + frozen output shape.
