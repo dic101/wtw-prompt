@@ -61,6 +61,13 @@ When to set it:
 - **Blocked cards** name what unblocks them (`Unblocks when WTW-___ is Done.`). Note: nothing auto-unblocks — the flag is cleared by hand.
 - **Mobile-first.** UI work targets iPhone width (~390px) as the floor, then progressively enhances for wider screens.
 
+## Ports and hosting
+
+When the card creates a new server or service, put this in `desc`:
+- Check the port registry first. Claimed ports on the Mini, Nov 23, 2026: 3333 Workboard, 3334 FindMyFam, 3335 ChowGym datastore (planned, not built), 3000 Mahjong prod, 8384 Syncthing UI, 22000 Syncthing sync. On the MBA: 3335 ChowGym Costco display, 3111 Mahjong dev, 8000 ChowPantry backend. Pick an unclaimed port on the host the service will run on, and record it in the registry. Mesh workers cannot read the Mini file, so inline the list, never write "see the registry".
+- Default to web-hosted: services are reached through the Mini reverse proxy (Caddy, :80/:443), not by raw `host:port`. Route by path: `mac-mini/<service>` → `localhost:<port>` — e.g. workboard :3333, FindMyFam :3334, ChowGym datastore :3335. Publish the routed URL as the service's link, never the raw `:port` as the primary URL.
+- Caveat: path routing breaks apps that assume `/` as root (absolute asset/API paths, websockets). If the app cannot take a base path, use a subdomain per service instead.
+
 ## What a card is (the diary rule)
 
 WtW is the product diary: the logical breakdown of a product (capabilities ->
